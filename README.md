@@ -9,7 +9,7 @@ Simple and quick network mapper tool coded in bash. It does host discovery throu
 [!] Use: ./bnmap.sh
 -------------------------------------------------------------------------------------
         [-i] Scan interface. Default subnet mask: 255.255.255.0 (Example: -i eht0)
-        [-s] Scan interface, but with subnet mask: 255.255.0.0 (Example: -i eht0)
+        [-s] Scan interface, but with subnet mask: 255.255.0.0 (Example: -s eht0)
         [-p] Scan open ports of a host. [Firts 10000 ports] (Example: -p 192.168.1.1)
         [-h] Show this help menu.
 ```
