@@ -12,7 +12,7 @@ function helpPanel(){
 	echo -e "\n[!] Use: ./bnmap.sh"
 	for i in $(seq 1 85); do echo -ne "-"; done
 	echo -e "\n\t[-i] Scan interface. Default subnet mask: 255.255.255.0 (Example: -i eht0)"
-	echo -e "\t[-s] Scan interface, but with subnet mask: 255.255.0.0 (Example: -i eht0)"
+	echo -e "\t[-s] Scan interface, but with subnet mask: 255.255.0.0 (Example: -s eht0)"
 	echo -e "\t[-p] Scan open ports of a host. [Firts 10000 ports] (Example: -p 192.168.1.1)"
 	echo -e "\t[-h] Show this help menu."
 	exit 1
