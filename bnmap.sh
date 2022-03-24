@@ -87,5 +87,3 @@ done
 if [ $parameter_counter -eq 0 ]; then
 	helpPanel
 fi
-
-
