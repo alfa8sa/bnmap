@@ -44,7 +44,7 @@ function portScan(){
 function bnmap(){
 	echo -e "\n[*] Scanning network: $1.0/24\n"
 	for i in $(seq 1 254); do
-		timeout 2 bash -c "ping -c 1 $1.$i" &>/dev/null && echo $network.$i >> hosts &
+		timeout 2 bash -c "ping -c 1 $1.$i" &>/dev/null && echo $1.$i >> hosts &
 	done; wait
 	portScan
 }
@@ -55,7 +55,7 @@ function bnmap_16(){
 		touch hosts
 		echo -e "  [*] Scanning network: $1.$j.0/24"
 		for i in $(seq 1 254); do
-			timeout 2 bash -c "ping -c 1 $1.$j.$i" &>/dev/null && echo $network.$j.$i >> hosts &
+			timeout 2 bash -c "ping -c 1 $1.$j.$i" &>/dev/null && echo $1.$j.$i >> hosts &
 		done; wait
 		portScan
 	done; wait
