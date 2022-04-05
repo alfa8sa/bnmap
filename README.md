@@ -51,7 +51,7 @@ Simple and quick network mapper tool coded in bash. It does host discovery throu
                 [!] Port open: 192.168.1.1:443
                 [!] Port open: 192.168.1.1:445
 ```
-### Scan first 10000 ports for 192.168.1.1
+### Scan the first 10000 ports for 192.168.1.1
 > ./bnmap.sh -p 192.168.1.1
 ```
 [*] Scanning open ports for 192.168.1.1
