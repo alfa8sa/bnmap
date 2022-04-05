@@ -14,7 +14,7 @@ Simple and quick network mapper tool coded in bash. It does host discovery throu
         [-p] Scan open ports of a host. [Firts 10000 ports] (Example: -p 192.168.1.1)
         [-h] Show this help menu.
 ```
-### Basic Usage. Scan the network 192.168.1.0/24
+### Basic usage. Scan the network 192.168.1.0/24
 > ./bnmap.sh -n 192.168.1.0/24
 ```
 [*] Scanning network: 192.168.1.0/24
