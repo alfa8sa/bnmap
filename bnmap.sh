@@ -51,11 +51,11 @@ function bnmap(){
 
 function bnmap_16(){
 	echo -e "\n[*] Scanning network: $1.0.0/16\n"
-	for j in $(seq 1 254); do
+	for j in $(seq 0 254); do
 		touch hosts
 		echo -e "  [*] Scanning network: $1.$j.0/24"
 		for i in $(seq 1 254); do
-			timeout 2 bash -c "ping -c 1 $1.$j.$i" &>/dev/null && echo $1.$j.$i >> hosts &
+			timeout 3 bash -c "ping -c 1 $1.$j.$i" &>/dev/null && echo $1.$j.$i >> hosts &
 		done; wait
 		portScan
 	done; wait
@@ -93,7 +93,7 @@ function check_network(){
 	else
 		echo -e "\n[!] Invalid network. Valid formats:\n"
 		echo -e "\t[*] 192.168.1.0/24"
-		echo -e "\t[*] 192.168.1.0/16\n"
+		echo -e "\t[*] 192.168.0.0/16\n"
 	fi
 }
 
