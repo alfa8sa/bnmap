@@ -133,7 +133,7 @@ function check_network(){
 		echo -e "[*] First IP:  $first_ip"
 		echo -e "[*] Last IP:   $last_ip\n"
 
-		echo -e "[*] Scanning network: $1\n"
+		echo -e "[*] Scanning network: $network_ip/$sub_cidr\n"
 		bnmap $first_ip $last_ip
 		
 	else
