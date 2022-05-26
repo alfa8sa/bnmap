@@ -25,15 +25,6 @@ Simple and quick network mapper tool coded in bash. It does host discovery throu
 ### Basic usage.
 > ./bnmap.sh -n 192.168.0.0/16
 ```
- _                   
-| |__  _ __  _ __ ___   __ _ _ __  
-| '_ \| '_ \| '_ \ _ \ / _\ | '_ \ 
-| |_) | | | | | | | | | (_| | |_) |
-|_.__/|_| |_|_| |_| |_|\__,_| .__/ 
-                            |_|    
--------------@alfa8sa--------------
-
-
 [*] Network:   192.168.0.0
 [*] Broadcast: 192.168.255.255
 [*] First IP:  192.168.0.1
