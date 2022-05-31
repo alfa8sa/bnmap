@@ -1,7 +1,7 @@
 # bnmap
 ### Bash Network Mapper
 
-Simple and quick network mapper tool coded in bash. It does host discovery through the **ICMP** protocol, finds open ports by using the bash shell `/dev/tcp/..` pseudo-device, and support the **255.255.0.0** subnet mask.
+Simple and quick network mapper tool coded in bash. It does host discovery by sending an **ICMP** packet, or trying to connect to **TCP** ports **80** and **443**. Once it discovers active hosts, it looks for open ports by using the bash shell `/dev/tcp/..` pseudo-device. Bnmap supports a wide variety of network ranges, and it is able to scan a network on a given interface.
 
 ### Help Menu
 > ./bnmap.sh -h
