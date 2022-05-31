@@ -22,7 +22,7 @@ function helpPanel(){
 	
 	echo -e "\n[!] Usage: ./bnmap.sh"
 	for i in $(seq 1 85); do echo -ne "-"; done
-	echo -e "\n\t[-n] Scan network. (Example: -n 192.168.1.0/24)"
+	echo -e "\n\t[-n] Scan network. (Example: -n 192.168.1.0/24, -n 192.168.1.1-192.168.1.255)"
 	echo -e "\t[-i] Scan interface. (Example: -i eth0)"
 	echo -e "\t[-p] Scan open ports of a host. [First 10000 ports] (Example: -p 192.168.1.1)"
 	echo -e "\t[-h] Show this help menu.\n"
@@ -57,7 +57,7 @@ function portScan(){
 			timeout 1 bash -c "</dev/tcp/$1/$port" &>/dev/null && echo -e "\r\033[0K\t[!] Port open: $1:$port" && draw_progress_bar $port 10000 "ports" &
 		done; wait
 	elif [[ $1 == "" ]]; then
-		hosts=$(cat .hosts | sort -t . -k 3,3n -k 4,4n)
+		hosts=$(cat .hosts | sort -t . -k 3,3n -k 4,4n -u)
 		for host in $hosts; do
 			echo -e "\r\033[0K\t[*] Host $host ACTIVE"
 			draw_progress_bar $counter $total "hosts"
@@ -86,6 +86,8 @@ function bnmap(){
 			touch .hosts
 			for i in $(seq $i1 $i2); do
 				timeout 2 bash -c "ping -c 1 $z1.$y.$j.$i" &>/dev/null && echo $z1.$y.$j.$i >> .hosts &
+				timeout 1 bash -c "</dev/tcp/$z1.$y.$j.$i/80" &>/dev/null && echo $z1.$y.$j.$i >> .hosts &
+				timeout 1 bash -c "</dev/tcp/$z1.$y.$j.$i/443" &>/dev/null && echo $z1.$y.$j.$i >> .hosts &
 			done; wait
 			portScan
 			let counter=counter+255
@@ -109,6 +111,7 @@ function check_interface(){
 
 function check_network(){
 	REGEX='(((25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?))(\/([8-9]|[1-2][0-9]|3[0-2]))([^0-9.]|$)'
+	rx='([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])'
 	
 	if [[ $1 =~ $REGEX ]]; then
 		ip_addr=$(echo $1 | awk -F "/" '{print $1}')
@@ -135,12 +138,33 @@ function check_network(){
 
 		echo -e "[*] Scanning network: $network_ip/$sub_cidr\n"
 		bnmap $first_ip $last_ip
-		
+	elif [[ $1 =~ ^$rx\.$rx\.$rx\.$rx\-$rx\.$rx\.$rx\.$rx$ ]]; then
+		IFS=- read -r first_ip last_ip <<< $1
+
+		IFS=. read -r z1 y1 j1 i1 <<< "$first_ip"
+		IFS=. read -r z2 y2 j2 i2 <<< "$last_ip"
+
+		if [ $(expr $z2 - $z1) -lt 0 ] || [ $(expr $y2 - $y1) -lt 0 ] || [ $(expr $j2 - $j1) -lt 0 ] || [ $(expr $i2 - $i1) -lt 0 ]; then
+			echo -e "\n[!] Invalid network. Example of valid formats:\n"
+			echo -e "\t[*] 192.168.1.1-192.168.1.254"
+			echo -e "\t[*] 172.16.0.1-172.31.255.254"
+			echo -e "\t[*] 10.0.0.1-10.255.255.254\n"
+		else
+			echo -e "\n[*] Network:   $1"
+			echo -e "[*] First IP:  $first_ip"
+			echo -e "[*] Last IP:   $last_ip\n"
+	
+			echo -e "[*] Scanning network: $1\n"
+			bnmap $first_ip $last_ip
+		fi
 	else
 		echo -e "\n[!] Invalid network. Example of valid formats:\n"
 		echo -e "\t[*] 192.168.1.0/24"
 		echo -e "\t[*] 172.16.0.0/12"
-		echo -e "\t[*] 10.0.0.0/8\n"
+		echo -e "\t[*] 10.0.0.0/8"
+		echo -e "\t[*] 192.168.1.1-192.168.1.254"
+		echo -e "\t[*] 172.16.0.1-172.31.255.254"
+		echo -e "\t[*] 10.0.0.1-10.255.255.254\n"
 	fi
 }
 
