@@ -1,7 +1,7 @@
 # bnmap
 ### Bash Network Mapper
 
-Simple and quick network mapper tool coded in bash. It does host discovery by sending an **ICMP** packet, or trying to connect to **TCP** ports **80** and **443**. Once it discovers active hosts, it looks for open ports by using the bash shell `/dev/tcp/..` pseudo-device. It supports a wide variety of network ranges, and it is able to scan a network on a given interface.
+Simple and quick network mapper tool coded in bash. It does host discovery by sending an **ICMP** packet, or trying to connect to **TCP** ports **80** and **443**. Once it discovers active hosts, it looks for open ports by using the bash shell `/dev/tcp/..` pseudo-device. It supports a wide variety of network ranges, it is able to scan a network on a given interface, and it can scan multiple networks and hosts from a given file.
 
 ### Help Menu
 > ./bnmap.sh -h
@@ -18,7 +18,8 @@ Simple and quick network mapper tool coded in bash. It does host discovery by se
 [!] Usage: ./bnmap.sh
 -------------------------------------------------------------------------------------
         [-n] Scan network. (Example: -n 192.168.1.0/24, -n 192.168.1.1-192.168.1.255)
-        [-i] Scan interface. (Example: -i eth0)
+        [-i] Scan interface. (Example: -i eth0, -i eth0 -n 172.16.1.0/24)
+        [-f] Scan networks and/or hosts in file. (Example: -f hosts.txt)
         [-p] Scan open ports of a host. [First 10000 ports] (Example: -p 192.168.1.1)
         [-h] Show this help menu.
 ```
@@ -26,7 +27,6 @@ Simple and quick network mapper tool coded in bash. It does host discovery by se
 > ./bnmap.sh -n 192.168.0.0/16
 ```
 [*] Network:   192.168.0.0
-[*] Broadcast: 192.168.255.255
 [*] First IP:  192.168.0.1
 [*] Last IP:   192.168.255.254
 
